@@ -19,4 +19,6 @@ jobs:
       - run: ./check.sh
       - name: Test alert (manual runs only)
         if: ${{ inputs.test_alert }}
-        run: echo "TEST ALERT: this run failed on purpose to check that the failure email arrives." && exit 1
+        run: |
+          echo "TEST ALERT - this run failed on purpose to check that the failure email arrives."
+          exit 1
