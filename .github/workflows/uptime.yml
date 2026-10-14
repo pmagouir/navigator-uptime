@@ -3,6 +3,11 @@ on:
   schedule:
     - cron: "*/5 * * * *"   # GitHub may start scheduled runs a few minutes late
   workflow_dispatch:
+    inputs:
+      test_alert:
+        description: "Fail on purpose to test the alert email"
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -12,3 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: ./check.sh
+      - name: Test alert (manual runs only)
+        if: ${{ inputs.test_alert }}
+        run: echo "TEST ALERT: this run failed on purpose to check that the failure email arrives." && exit 1
